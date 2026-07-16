@@ -1,14 +1,24 @@
 # Maven
 target/
 
-# IDE
+# IntelliJ
 .idea/
 *.iml
+
+# VSCode
 .vscode/
+
+# Eclipse
+.project
+.classpath
 .settings/
-# .project / .classpath versionados para o Language Server reconhecer o módulo Maven
-.ide-libs/
+
+# Logs
+*.log
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Environment
+.env

@@ -28,10 +28,24 @@ public class EntityManagerFactoryProducer {
 
     @PostConstruct
     void init() {
+
         Map<String, Object> props = new HashMap<>();
         props.put("hibernate.connection.datasource", dataSource);
         props.put("jakarta.persistence.nonJtaDataSource", dataSource);
+
+        // ===== DEBUG =====
+        System.out.println("====================================");
+        System.out.println("Criando EntityManagerFactory...");
+        System.out.println("Persistence Unit : " + PU_NAME);
+        System.out.println("DataSource       : " + dataSource);
+        System.out.println("Properties       : " + props);
+        System.out.println("====================================");
+
         entityManagerFactory = Persistence.createEntityManagerFactory(PU_NAME, props);
+
+        System.out.println("====================================");
+        System.out.println("EntityManagerFactory criada com sucesso.");
+        System.out.println("====================================");
     }
 
     @Produces

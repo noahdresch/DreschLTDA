@@ -25,15 +25,25 @@ public class DataSourceProducer {
     @PostConstruct
     void init() {
         Properties props = carregarPropriedades();
+
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(props.getProperty("jdbc.url"));
         config.setUsername(props.getProperty("jdbc.user"));
         config.setPassword(props.getProperty("jdbc.password"));
         config.setDriverClassName(props.getProperty("jdbc.driver", "org.postgresql.Driver"));
-        config.setMaximumPoolSize(Integer.parseInt(
-                props.getProperty("hikari.maximumPoolSize", "10")));
+        config.setMaximumPoolSize(
+                Integer.parseInt(props.getProperty("hikari.maximumPoolSize", "10")));
         config.setPoolName(props.getProperty("hikari.poolName", "EmpresasHikariPool"));
+
         dataSource = new HikariDataSource(config);
+
+        // ===== DEBUG =====
+        System.out.println("====================================");
+        System.out.println("DataSource criado com sucesso");
+        System.out.println("JDBC URL : " + config.getJdbcUrl());
+        System.out.println("Usuário  : " + config.getUsername());
+        System.out.println("Driver   : " + config.getDriverClassName());
+        System.out.println("====================================");
     }
 
     @Produces
@@ -51,17 +61,22 @@ public class DataSourceProducer {
 
     private static Properties carregarPropriedades() {
         Properties props = new Properties();
+
         try (InputStream in = Thread.currentThread()
                 .getContextClassLoader()
                 .getResourceAsStream("db.properties")) {
+
             if (in == null) {
                 throw new IllegalStateException(
                         "Arquivo db.properties não encontrado no classpath.");
             }
+
             props.load(in);
+
         } catch (IOException e) {
             throw new IllegalStateException("Falha ao ler db.properties", e);
         }
+
         return props;
     }
 }
