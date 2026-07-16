@@ -9,9 +9,6 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.ConverterException;
 import jakarta.faces.convert.FacesConverter;
 
-/**
- * Converte entre CNPJ mascarado na UI e dígitos na model/banco.
- */
 @FacesConverter(value = "cnpjConverter", managed = true)
 public class CnpjConverter implements Converter<String> {
 

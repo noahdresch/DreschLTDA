@@ -20,12 +20,6 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
-/**
- * Controller da tela de listagem/pesquisa de empresas.
- * Paginação e ordenação: client-side via {@code p:dataTable}.
- * Seleção simples por clique na linha, com card de detalhes.
- * Exportação: checklist de colunas + formato (xlsx/pdf) + {@code p:dataExporter}.
- */
 @Named
 @ViewScoped
 public class EmpresaListController implements Serializable {
@@ -83,18 +77,13 @@ public class EmpresaListController implements Serializable {
     }
 
     public void onRowSelect() {
-        // seleção já vinculada em empresaSelecionada via selection do DataTable
+        
     }
 
     public void onRowUnselect() {
         limparSelecao();
     }
 
-    /**
-     * No 3º clique ({@code allowUnsorting}), o ícone volta ao neutro,
-     * mas a lista permanece na última ordem. Recarrega do serviço
-     * para restaurar a ordem original (sem ordenação aplicada no grid).
-     */
     public void onSort(SortEvent event) {
         if (estaSemOrdenacao(event.getSortBy())) {
             empresas = empresaService.pesquisar(filtro);
@@ -116,18 +105,11 @@ public class EmpresaListController implements Serializable {
         empresaSelecionada = null;
     }
 
-    /**
-     * Marca todas as colunas e redefine o formato ao abrir o modal de exportação.
-     */
     public void prepararDialogoExportacao() {
         exportSelection.selectAll();
         exportFormat = FORMATO_XLSX;
     }
 
-    /**
-     * Impede o download se nenhuma coluna estiver marcada.
-     * Envia {@code exportFormat} via callbackParam para o oncomplete do composite.
-     */
     public void validarSelecaoExportacao() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (!exportSelection.hasSelection()) {
@@ -141,7 +123,6 @@ public class EmpresaListController implements Serializable {
         PrimeFaces.current().ajax().addCallbackParam("exportFormat", exportFormat);
     }
 
-    /** Usado em {@code exportable="#{empresaListController.exportavel('chave')}"}. */
     public boolean exportavel(String key) {
         return exportSelection.isSelected(key);
     }

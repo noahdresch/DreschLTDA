@@ -4,11 +4,6 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
              version="3.1">
 
-    <!--
-      Unidade de persistência do CRUD de Empresas (Tomcat / RESOURCE_LOCAL).
-      DataSource HikariCP injetado via CDI (db.properties) — sem JNDI de app server.
-      Namespace JPA: https://jakarta.ee/xml/ns/persistence (obrigatório para o parser do Hibernate).
-    -->
     <persistence-unit name="empresasPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.onboardingrsd.empresas.model.Empresa</class>

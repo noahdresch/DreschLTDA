@@ -3,10 +3,6 @@ package com.onboardingrsd.empresas.export;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Coluna disponível para exportação tabular.
- * Reutilizável por qualquer tela que ofereça checklist de colunas.
- */
 public class ExportColumn implements Serializable {
 
     private static final long serialVersionUID = 1L;

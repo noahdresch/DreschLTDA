@@ -10,9 +10,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
-/**
- * Casos de uso de Empresa.
- */
 @ApplicationScoped
 public class EmpresaService {
 
@@ -34,9 +31,6 @@ public class EmpresaService {
         return empresaRepository.findById(id);
     }
 
-    /**
-     * Verifica unicidade de CNPJ (exclui o próprio id na edição).
-     */
     @Transactional(Transactional.TxType.SUPPORTS)
     public boolean existeCnpj(String cnpj, Long excludeId) {
         return empresaRepository.existsByCnpj(cnpj, excludeId);

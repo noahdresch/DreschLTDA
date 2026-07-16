@@ -15,7 +15,6 @@
     <h:outputStylesheet library="css" name="layout.css"/>
 </h:head>
 <h:body>
-    <!-- Toast global: consome FacesMessage com clientId null (API atual inalterada). -->
     <h:form id="frmToast">
         <p:growl id="toastNotificacoes"
                  widgetVar="toastNotificacoes"
@@ -63,7 +62,6 @@
         </div>
     </div>
 
-    <!-- Mesmo menu em overlay no mobile (media query esconde .app-sidebar). -->
     <p:sidebar id="menuSidebar"
                widgetVar="menuSidebar"
                position="left"

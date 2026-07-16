@@ -18,9 +18,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/**
- * Entidade de domínio Empresa — mapeada à tabela {@code empresa}.
- */
 @Entity
 @Table(name = "empresa", uniqueConstraints = {
         @UniqueConstraint(name = "uk_empresa_cnpj", columnNames = "cnpj")

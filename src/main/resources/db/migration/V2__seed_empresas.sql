@@ -1,6 +1,3 @@
--- V2: dados iniciais de empresas (seed baseline)
--- Idempotente: ON CONFLICT na UNIQUE de CNPJ
-
 INSERT INTO empresa (
     razao_social,
     nome_fantasia,

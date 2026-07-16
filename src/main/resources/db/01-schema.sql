@@ -1,8 +1,0 @@
--- DEPRECADO — ver estrutura nova (D033).
---
--- Substituído por:
---   db/00-create-database.sql
---   db/migration/V1__create_table_empresa.sql
---
--- Fluxo atual: ver db/README.md e README.md na raiz do projeto.
--- Não execute este arquivo.

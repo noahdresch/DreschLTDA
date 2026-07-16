@@ -1,11 +1,3 @@
--- Reset LOCAL de desenvolvimento (DESTRUTIVO).
--- Não é executado pelo Flyway. Não use em produção.
---
--- Via psql:
---   psql -U postgres -d empresas_jsf -f src/main/resources/db/dev/reset_empresas.sql
---
--- Efeito: apaga todas as empresas e reinsere o seed baseline (V2).
-
 TRUNCATE TABLE empresa RESTART IDENTITY;
 
 INSERT INTO empresa (

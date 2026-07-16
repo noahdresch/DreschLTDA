@@ -13,9 +13,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-/**
- * Cria a {@link EntityManagerFactory} RESOURCE_LOCAL ligada ao DataSource Hikari.
- */
 @ApplicationScoped
 public class EntityManagerFactoryProducer {
 

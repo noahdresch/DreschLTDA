@@ -30,14 +30,12 @@
         <openpdf.version>1.3.39</openpdf.version>
         <flyway.version>10.21.0</flyway.version>
 
-        <!-- Espelha db.properties; sobrescreva com -Dflyway.password=... se necessário -->
         <flyway.url>jdbc:postgresql://localhost:5432/empresas_jsf</flyway.url>
         <flyway.user>postgres</flyway.user>
         <flyway.password>postgres</flyway.password>
     </properties>
 
     <dependencies>
-        <!-- Servlet API: fornecida pelo Tomcat -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -45,56 +43,48 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- @PostConstruct / @PreDestroy (IDE + classpath explícito) -->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
             <version>${annotation.api.version}</version>
         </dependency>
 
-        <!-- Faces: implementação Mojarra no WAR -->
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.faces</artifactId>
             <version>${mojarra.version}</version>
         </dependency>
 
-        <!-- CDI: Weld Servlet no WAR -->
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet-core</artifactId>
             <version>${weld.version}</version>
         </dependency>
 
-        <!-- @Transactional (interceptor próprio RESOURCE_LOCAL) -->
         <dependency>
             <groupId>jakarta.transaction</groupId>
             <artifactId>jakarta.transaction-api</artifactId>
             <version>${transaction.api.version}</version>
         </dependency>
 
-        <!-- JPA: Hibernate no WAR -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
 
-        <!-- Bean Validation: Hibernate Validator no WAR -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.validator.version}</version>
         </dependency>
 
-        <!-- Expressão de mensagens do Validator -->
         <dependency>
             <groupId>org.glassfish.expressly</groupId>
             <artifactId>expressly</artifactId>
             <version>5.0.0</version>
         </dependency>
 
-        <!-- Pool JDBC + driver PostgreSQL no WAR -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -106,7 +96,6 @@
             <version>${postgresql.version}</version>
         </dependency>
 
-        <!-- PrimeFaces (classifier jakarta) -->
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -140,7 +129,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
             </plugin>
-            <!-- Schema/seed: mvn flyway:migrate | flyway:info (não roda no startup do Tomcat) -->
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>

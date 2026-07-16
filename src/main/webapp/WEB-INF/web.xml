@@ -6,7 +6,6 @@
 
     <display-name>empresas-jsf</display-name>
 
-    <!-- CDI (Weld) no Tomcat -->
     <listener>
         <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
     </listener>
@@ -21,7 +20,6 @@
         <param-value>Development</param-value>
     </context-param>
 
-    <!-- Tema dark oficial do PrimeFaces 13 (free): Vela. Biblioteca: primefaces-vela. -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>vela</param-value>

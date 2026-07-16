@@ -8,10 +8,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.transaction.Transactional;
 
-/**
- * Interceptor CDI que implementa {@link Transactional} com {@link EntityTransaction}
- * (RESOURCE_LOCAL no Tomcat — substitui o JTA do app server).
- */
 @Interceptor
 @Transactional
 public class TransactionalInterceptor {
@@ -54,8 +50,6 @@ public class TransactionalInterceptor {
             return false;
         }
         return switch (type) {
-            // SUPPORTS sem TX ativa: ainda abre TX curta — Hibernate RESOURCE_LOCAL
-            // exige contexto transacional estável para consultas no Tomcat.
             case REQUIRED, REQUIRES_NEW, MANDATORY, SUPPORTS -> true;
             case NOT_SUPPORTED, NEVER -> false;
         };

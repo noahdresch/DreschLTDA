@@ -2,10 +2,6 @@
                 xmlns:ui="jakarta.faces.facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <!--
-        Menu reutilizável (desktop sidebar + p:sidebar mobile).
-        Parâmetro menuId evita conflito de clientId quando o fragmento é incluído duas vezes.
-    -->
     <p:megaMenu id="#{empty menuId ? 'appMegaMenu' : menuId}"
                 orientation="vertical"
                 styleClass="app-mega-menu">

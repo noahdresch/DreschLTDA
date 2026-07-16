@@ -4,10 +4,6 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
-/**
- * Destaca o item ativo do menu lateral com base no viewId da requisição atual.
- * Formulário de empresa pertence ao módulo Empresas.
- */
 @Named
 @RequestScoped
 public class NavigationController {

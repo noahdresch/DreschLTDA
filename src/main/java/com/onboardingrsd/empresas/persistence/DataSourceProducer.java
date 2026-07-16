@@ -14,9 +14,6 @@ import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
-/**
- * Produz o {@link DataSource} HikariCP a partir de {@code db.properties}.
- */
 @ApplicationScoped
 public class DataSourceProducer {
 

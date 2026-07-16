@@ -14,9 +14,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.PersistenceException;
 
-/**
- * Controller do formulário de cadastro/edição de empresas.
- */
 @Named
 @ViewScoped
 public class EmpresaFormController implements Serializable {
@@ -25,7 +22,6 @@ public class EmpresaFormController implements Serializable {
 
     private static final String CLIENT_ID_CNPJ = "formCadastro:cnpj";
 
-    /** Toast global — texto alinhado à mensagem personalizada já em uso. */
     private static final String MSG_ERRO_PERSISTENCIA =
             "Não foi possível salvar a empresa. Verifique os dados.";
 
@@ -132,9 +128,6 @@ public class EmpresaFormController implements Serializable {
         return mensagemErroPersistencia(context);
     }
 
-    /**
-     * Toast global (texto atual) + mensagem no campo CNPJ (destaque visual).
-     */
     private String mensagemErroCnpjDuplicado(FacesContext context) {
         context.addMessage(null, new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,

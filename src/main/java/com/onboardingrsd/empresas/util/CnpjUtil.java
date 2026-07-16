@@ -1,10 +1,5 @@
 package com.onboardingrsd.empresas.util;
 
-/**
- * Formatação e normalização de CNPJ.
- * Persistência e regras de domínio usam apenas dígitos ({@code 14});
- * a UI exibe {@code XX.XXX.XXX/XXXX-XX}.
- */
 public final class CnpjUtil {
 
     private static final int TAMANHO_DIGITOS = 14;
@@ -12,9 +7,6 @@ public final class CnpjUtil {
     private CnpjUtil() {
     }
 
-    /**
-     * Remove tudo que não for dígito.
-     */
     public static String somenteDigitos(String valor) {
         if (valor == null) {
             return null;
@@ -23,10 +15,6 @@ public final class CnpjUtil {
         return digitos.isEmpty() ? "" : digitos;
     }
 
-    /**
-     * Formata para {@code XX.XXX.XXX/XXXX-XX}.
-     * Se não houver 14 dígitos, devolve o valor original (ou vazio).
-     */
     public static String formatar(String valor) {
         String digitos = somenteDigitos(valor);
         if (digitos == null || digitos.length() != TAMANHO_DIGITOS) {

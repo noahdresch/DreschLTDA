@@ -7,9 +7,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
-/**
- * {@link EntityManager} por requisição HTTP — compartilhado com o interceptor de TX.
- */
 public class EntityManagerProducer {
 
     @Inject

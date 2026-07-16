@@ -51,11 +51,6 @@
                     </p:panelGrid>
                 </p:panel>
 
-                <!--
-                    Ordem das colunas = ordem do modal / Excel.
-                    Visíveis no grid: razão, fantasia, tipo, ramo (+ ações).
-                    Demais campos da entidade entram só no export (visible=false).
-                -->
                 <p:dataTable id="tabelaEmpresas"
                              value="#{empresaListController.empresas}"
                              var="empresa"
@@ -149,7 +144,6 @@
                     </p:column>
                 </p:dataTable>
 
-                <!-- Downloads após validação no modal (ajax=false) -->
                 <p:commandButton id="btnExportarArquivo"
                                  value="export"
                                  ajax="false"
@@ -172,7 +166,6 @@
             <ui:include src="/WEB-INF/includes/empresas/confirm-exclusao.xhtml"/>
         </h:form>
 
-        <!-- Fora do form da listagem: form próprio no composite (checkboxes/formato enviados corretamente) -->
         <comp:exportColumnsDialog id="dlgExport"
                                   widgetVar="dlgExport"
                                   header="Exportar"

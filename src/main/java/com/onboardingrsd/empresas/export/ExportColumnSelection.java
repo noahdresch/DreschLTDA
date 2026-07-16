@@ -8,10 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Estado da seleção de colunas para exportação.
- * Mantém a ordem definida pela aplicação (mesma ordem do checklist / Excel).
- */
 public class ExportColumnSelection implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,16 +22,10 @@ public class ExportColumnSelection implements Serializable {
         return new ExportColumnSelection(Arrays.asList(columns));
     }
 
-    /**
-     * Lista na ordem de exportação (rótulos do checklist / colunas do Excel).
-     */
     public List<ExportColumn> getColumns() {
         return Collections.unmodifiableList(columns);
     }
 
-    /**
-     * Binding do {@code p:selectManyCheckbox}: chaves marcadas.
-     */
     public List<String> getSelectedKeys() {
         List<String> keys = new ArrayList<>();
         for (ExportColumn column : columns) {

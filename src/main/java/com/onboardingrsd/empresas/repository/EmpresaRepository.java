@@ -10,9 +10,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
-/**
- * Acesso a dados de {@link Empresa}.
- */
 @ApplicationScoped
 public class EmpresaRepository {
 
@@ -25,10 +22,6 @@ public class EmpresaRepository {
                 .getResultList();
     }
 
-    /**
-     * Pesquisa por termo livre em razão social, nome fantasia, CNPJ e ramo.
-     * Sem termo (null/blank), equivale a {@link #findAll()}.
-     */
     public List<Empresa> findByFiltro(String filtro) {
         if (filtro == null || filtro.isBlank()) {
             return findAll();
@@ -84,10 +77,6 @@ public class EmpresaRepository {
         findById(id).ifPresent(this::remover);
     }
 
-    /**
-     * Indica se já existe empresa com o CNPJ informado.
-     * Em edição, {@code excludeId} ignora o próprio registro.
-     */
     public boolean existsByCnpj(String cnpj, Long excludeId) {
         if (cnpj == null || cnpj.isBlank()) {
             return false;

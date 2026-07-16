@@ -5,7 +5,6 @@
        version="4.0"
        bean-discovery-mode="annotated">
 
-    <!-- Interceptor RESOURCE_LOCAL para jakarta.transaction.Transactional -->
     <interceptors>
         <class>com.onboardingrsd.empresas.persistence.TransactionalInterceptor</class>
     </interceptors>

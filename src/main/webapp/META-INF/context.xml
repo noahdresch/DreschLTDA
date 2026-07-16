@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <!-- BeanManager CDI para o Weld no Tomcat -->
     <Resource name="BeanManager"
               auth="Container"
               type="jakarta.enterprise.inject.spi.BeanManager"

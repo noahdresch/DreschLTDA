@@ -1,7 +1,3 @@
--- V1: tabela empresa (schema inicial)
--- Aplicada pelo Flyway: mvn flyway:migrate
--- Alinhado à entity Empresa / D006 / D017
-
 CREATE TABLE IF NOT EXISTS empresa (
     id              BIGSERIAL    PRIMARY KEY,
     razao_social    VARCHAR(120) NOT NULL,
