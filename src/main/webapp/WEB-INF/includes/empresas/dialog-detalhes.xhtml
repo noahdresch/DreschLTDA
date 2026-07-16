@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <p:dialog id="dlgDetalhes"
+              widgetVar="dlgDetalhesEmpresa"
+              header="Detalhes da empresa"
+              modal="true"
+              responsive="true"
+              draggable="false"
+              resizable="false"
+              width="640"
+              position="center"
+              closeOnEscape="true"
+              appendTo="@(body)">
+        <p:ajax event="close"
+                listener="#{empresaListController.limparSelecao}"
+                update=":formListagem:tabelaEmpresas"
+                process="@this"/>
+
+        <p:card>
+            <p:panelGrid columns="2"
+                         rendered="#{empresaListController.empresaSelecionada != null}"
+                         styleClass="ui-fluid"
+                         layout="grid"
+                         columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8"
+                         style="width:100%;">
+                <h:outputText value="Razão social" style="font-weight:bold"/>
+                <h:outputText value="#{empresaListController.empresaSelecionada.razaoSocial}"/>
+
+                <h:outputText value="Nome fantasia" style="font-weight:bold"/>
+                <h:outputText value="#{empresaListController.empresaSelecionada.nomeFantasia}"/>
+
+                <h:outputText value="CNPJ" style="font-weight:bold"/>
+                <h:outputText value="#{empresaListController.empresaSelecionada.cnpj}">
+                    <f:converter converterId="cnpjConverter"/>
+                </h:outputText>
+
+                <h:outputText value="Ramo de atividade" style="font-weight:bold"/>
+                <h:outputText value="#{empresaListController.empresaSelecionada.ramoAtividade}"/>
+
+                <h:outputText value="Data de fundação" style="font-weight:bold"/>
+                <h:outputText value="#{empresaListController.empresaSelecionada.dataFundacao}">
+                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                </h:outputText>
+
+                <h:outputText value="Tipo da empresa" style="font-weight:bold"/>
+                <h:outputText value="#{empresaListController.empresaSelecionada.tipoEmpresa}"/>
+            </p:panelGrid>
+        </p:card>
+    </p:dialog>
+
+</ui:composition>

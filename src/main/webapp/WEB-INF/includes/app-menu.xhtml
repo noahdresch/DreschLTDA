@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!--
+        Menu reutilizável (desktop sidebar + p:sidebar mobile).
+        Parâmetro menuId evita conflito de clientId quando o fragmento é incluído duas vezes.
+    -->
+    <p:megaMenu id="#{empty menuId ? 'appMegaMenu' : menuId}"
+                orientation="vertical"
+                styleClass="app-mega-menu">
+        <p:menuitem value="Início"
+                    outcome="/index"
+                    icon="pi pi-home"
+                    styleClass="#{navigationController.isActive('inicio') ? 'app-menu-item-active' : ''}"/>
+        <p:menuitem value="Empresas"
+                    outcome="/pages/empresas"
+                    icon="pi pi-building"
+                    styleClass="#{navigationController.isActive('empresas') ? 'app-menu-item-active' : ''}"/>
+    </p:megaMenu>
+
+</ui:composition>

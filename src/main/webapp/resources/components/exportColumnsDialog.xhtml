@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="jakarta.faces.composite"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!--
+        Modal reutilizável: colunas + formato (xlsx/pdf) + Cancelar / Exportar.
+        Dois triggers ocultos (dataExporter) evitam rendered dinâmico no exporter.
+        Form próprio no dialog; download via botão oculto (ajax=false).
+    -->
+    <cc:interface>
+        <cc:attribute name="widgetVar" required="true"/>
+        <cc:attribute name="header" default="Exportar"/>
+        <cc:attribute name="selection" required="true"
+                      type="com.onboardingrsd.empresas.export.ExportColumnSelection"/>
+        <cc:attribute name="format" required="true"
+                      shortDescription="Binding do formato: xlsx ou pdf"/>
+        <cc:attribute name="validateAction" required="true"
+                      method-signature="void method()"/>
+        <cc:attribute name="triggerXlsxClientId" required="true"
+                      shortDescription="Client ID do botão oculto dataExporter xlsx"/>
+        <cc:attribute name="triggerPdfClientId" required="true"
+                      shortDescription="Client ID do botão oculto dataExporter pdf"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <p:dialog id="dlgExport"
+                  widgetVar="#{cc.attrs.widgetVar}"
+                  header="#{cc.attrs.header}"
+                  modal="true"
+                  responsive="true"
+                  draggable="false"
+                  resizable="false"
+                  width="420"
+                  position="center"
+                  closeOnEscape="true">
+
+            <h:form id="formExportOpcoes">
+                <h:panelGroup id="opcoesExportacao" layout="block">
+                    <p:outputLabel value="Selecione as colunas para incluir no arquivo:"
+                                   style="display:block; margin-bottom: 0.75rem;"/>
+                    <p:selectManyCheckbox id="chkColunas"
+                                          value="#{cc.attrs.selection.selectedKeys}"
+                                          layout="responsive"
+                                          columns="1">
+                        <f:selectItems value="#{cc.attrs.selection.columns}"
+                                       var="coluna"
+                                       itemValue="#{coluna.key}"
+                                       itemLabel="#{coluna.label}"/>
+                    </p:selectManyCheckbox>
+
+                    <p:outputLabel value="Formato:"
+                                   style="display:block; margin-top: 1.25rem; margin-bottom: 0.5rem;"/>
+                    <p:selectOneRadio id="formatoExportacao"
+                                      value="#{cc.attrs.format}"
+                                      layout="lineDirection">
+                        <f:selectItem itemValue="xlsx" itemLabel="Excel (.xlsx)"/>
+                        <f:selectItem itemValue="pdf" itemLabel="PDF (.pdf)"/>
+                    </p:selectOneRadio>
+                </h:panelGroup>
+
+                <div style="margin-top: 1.25rem; text-align: right; white-space: nowrap;">
+                    <p:commandButton value="Cancelar"
+                                     type="button"
+                                     icon="pi pi-times"
+                                     styleClass="ui-button-secondary"
+                                     style="margin-right: 0.5rem;"
+                                     onclick="PF('#{cc.attrs.widgetVar}').hide()"/>
+                    <p:commandButton value="Exportar"
+                                     icon="pi pi-download"
+                                     action="#{cc.attrs.validateAction}"
+                                     process="@form"
+                                     update="@form"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {
+                                                     PF('#{cc.attrs.widgetVar}').hide();
+                                                     var id = (args.exportFormat === 'pdf')
+                                                         ? '#{cc.attrs.triggerPdfClientId}'
+                                                         : '#{cc.attrs.triggerXlsxClientId}';
+                                                     document.getElementById(id).click();
+                                                 }"/>
+                </div>
+            </h:form>
+        </p:dialog>
+    </cc:implementation>
+</html>

@@ -1,0 +1,186 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:comp="jakarta.faces.composite/components"
+                template="/WEB-INF/templates/layout.xhtml">
+
+    <ui:define name="title">Empresas</ui:define>
+
+    <ui:define name="content">
+        <h:form id="formListagem">
+            <p:panel header="Empresas">
+                <div class="app-toolbar">
+                    <p:button id="btnNovaEmpresa"
+                              value="Nova empresa"
+                              outcome="/pages/empresa-form"
+                              icon="pi pi-plus"
+                              style="width: auto;"/>
+                    <p:commandButton id="btnAbrirExportacao"
+                                     value="Exportar"
+                                     icon="pi pi-download"
+                                     style="width: auto;"
+                                     action="#{empresaListController.prepararDialogoExportacao}"
+                                     process="@this"
+                                     update=":dlgExport"
+                                     oncomplete="PF('dlgExport').show()"/>
+                </div>
+
+                <p:panel header="Pesquisar" toggleable="true" styleClass="app-section">
+                    <p:panelGrid columns="3" layout="grid"
+                                 styleClass="ui-fluid"
+                                 columnClasses="ui-g-12 ui-md-8,ui-g-12 ui-md-2,ui-g-12 ui-md-2">
+                        <p:inputText id="filtro"
+                                     value="#{empresaListController.filtro}"
+                                     placeholder="Razão social, fantasia, CNPJ ou ramo"/>
+                        <p:commandButton value="Pesquisar"
+                                         action="#{empresaListController.pesquisar}"
+                                         icon="pi pi-search"
+                                         update=":formListagem:tabelaEmpresas :formListagem:dlgDetalhes"
+                                         process="@this filtro"
+                                         oncomplete="PF('dlgDetalhesEmpresa').hide()"/>
+                        <p:commandButton value="Limpar"
+                                         action="#{empresaListController.limpar}"
+                                         icon="pi pi-times"
+                                         styleClass="ui-button-secondary"
+                                         update=":formListagem:tabelaEmpresas :formListagem:filtro :formListagem:dlgDetalhes"
+                                         process="@this"
+                                         immediate="true"
+                                         oncomplete="PF('dlgDetalhesEmpresa').hide()"/>
+                    </p:panelGrid>
+                </p:panel>
+
+                <!--
+                    Ordem das colunas = ordem do modal / Excel.
+                    Visíveis no grid: razão, fantasia, tipo, ramo (+ ações).
+                    Demais campos da entidade entram só no export (visible=false).
+                -->
+                <p:dataTable id="tabelaEmpresas"
+                             value="#{empresaListController.empresas}"
+                             var="empresa"
+                             styleClass="ui-fluid"
+                             paginator="true"
+                             rows="#{empresaListController.rows}"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="Exibindo {startRecord}–{endRecord} de {totalRecords}"
+                             rowsPerPageTemplate="5,10,20"
+                             sortMode="single"
+                             allowUnsorting="true"
+                             selectionMode="single"
+                             selection="#{empresaListController.empresaSelecionada}"
+                             rowKey="#{empresa.id}"
+                             bordered="true"
+                             stripedRows="true"
+                             emptyMessage="Nenhuma empresa encontrada.">
+                    <p:ajax event="rowSelect"
+                            listener="#{empresaListController.onRowSelect}"
+                            update=":formListagem:dlgDetalhes"
+                            process="@this"
+                            oncomplete="PF('dlgDetalhesEmpresa').show()"/>
+                    <p:ajax event="rowUnselect"
+                            listener="#{empresaListController.onRowUnselect}"
+                            update=":formListagem:dlgDetalhes"
+                            process="@this"
+                            oncomplete="PF('dlgDetalhesEmpresa').hide()"/>
+                    <p:ajax event="sort"
+                            listener="#{empresaListController.onSort}"
+                            update="@this"
+                            process="@this"/>
+
+                    <p:column headerText="ID"
+                              visible="false"
+                              exportable="#{empresaListController.exportavel('id')}">
+                        <h:outputText value="#{empresa.id}"/>
+                    </p:column>
+                    <p:column headerText="Razão social"
+                              sortBy="#{empresa.razaoSocial}"
+                              exportable="#{empresaListController.exportavel('razaoSocial')}">
+                        <h:outputText value="#{empresa.razaoSocial}"/>
+                    </p:column>
+                    <p:column headerText="Nome fantasia"
+                              sortBy="#{empresa.nomeFantasia}"
+                              exportable="#{empresaListController.exportavel('nomeFantasia')}">
+                        <h:outputText value="#{empresa.nomeFantasia}"/>
+                    </p:column>
+                    <p:column headerText="Tipo empresa"
+                              sortBy="#{empresa.tipoEmpresa}"
+                              exportable="#{empresaListController.exportavel('tipoEmpresa')}">
+                        <h:outputText value="#{empresa.tipoEmpresa}"/>
+                    </p:column>
+                    <p:column headerText="Ramo atividade"
+                              sortBy="#{empresa.ramoAtividade}"
+                              exportable="#{empresaListController.exportavel('ramoAtividade')}">
+                        <h:outputText value="#{empresa.ramoAtividade}"/>
+                    </p:column>
+                    <p:column headerText="CNPJ"
+                              visible="false"
+                              exportable="#{empresaListController.exportavel('cnpj')}">
+                        <h:outputText value="#{empresa.cnpj}">
+                            <f:converter converterId="cnpjConverter"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Data de fundação"
+                              visible="false"
+                              exportable="#{empresaListController.exportavel('dataFundacao')}">
+                        <h:outputText value="#{empresa.dataFundacao}">
+                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Ações" style="width: 8rem; text-align: center;" exportable="false">
+                        <p:button icon="pi pi-pencil"
+                                  title="Editar"
+                                  outcome="/pages/empresa-form">
+                            <f:param name="id" value="#{empresa.id}"/>
+                        </p:button>
+                        <p:commandButton icon="pi pi-trash"
+                                         title="Excluir"
+                                         action="#{empresaListController.excluir(empresa)}"
+                                         update="@form"
+                                         process="@this"
+                                         styleClass="ui-button-danger"
+                                         style="margin-left: 0.25rem;"
+                                         oncomplete="PF('dlgDetalhesEmpresa').hide()">
+                            <p:confirm header="Confirmar exclusão"
+                                       message="Excluir a empresa #{empresa.razaoSocial}?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <!-- Downloads após validação no modal (ajax=false) -->
+                <p:commandButton id="btnExportarArquivo"
+                                 value="export"
+                                 ajax="false"
+                                 style="display:none;">
+                    <p:dataExporter type="xlsx"
+                                    target="tabelaEmpresas"
+                                    fileName="empresas"/>
+                </p:commandButton>
+                <p:commandButton id="btnExportarPdf"
+                                 value="export-pdf"
+                                 ajax="false"
+                                 style="display:none;">
+                    <p:dataExporter type="pdf"
+                                    target="tabelaEmpresas"
+                                    fileName="empresas"/>
+                </p:commandButton>
+            </p:panel>
+
+            <ui:include src="/WEB-INF/includes/empresas/dialog-detalhes.xhtml"/>
+            <ui:include src="/WEB-INF/includes/empresas/confirm-exclusao.xhtml"/>
+        </h:form>
+
+        <!-- Fora do form da listagem: form próprio no composite (checkboxes/formato enviados corretamente) -->
+        <comp:exportColumnsDialog id="dlgExport"
+                                  widgetVar="dlgExport"
+                                  header="Exportar"
+                                  selection="#{empresaListController.exportSelection}"
+                                  format="#{empresaListController.exportFormat}"
+                                  validateAction="#{empresaListController.validarSelecaoExportacao}"
+                                  triggerXlsxClientId="formListagem:btnExportarArquivo"
+                                  triggerPdfClientId="formListagem:btnExportarPdf"/>
+    </ui:define>
+
+</ui:composition>

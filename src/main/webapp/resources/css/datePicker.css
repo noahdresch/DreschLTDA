@@ -1,0 +1,123 @@
+/*
+ * Calendário (p:datePicker) — compacto + navegadores de mês/ano mais legíveis.
+ * O yearRange relativo (c-100:c) NÃO funciona neste DatePicker do PF 13
+ * (parseInt só aceita números absolutos, ex.: 1920:2030).
+ */
+
+.ui-datepicker.dp-fundacao,
+.dp-fundacao.ui-datepicker {
+    width: 18.5rem !important;
+    min-width: 18.5rem !important;
+    padding: 0.4rem !important;
+    font-size: 0.875rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    border-radius: 6px;
+}
+
+.dp-fundacao .ui-datepicker-header {
+    padding: 0.35rem 0.25rem 0.5rem !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.dp-fundacao .ui-datepicker-title {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 0 1.75rem !important;
+    position: relative;
+    z-index: 5;
+}
+
+/* Dropdowns de mês/ano — cores alinhadas ao tema dark (Vela) */
+.dp-fundacao select.ui-datepicker-month,
+.dp-fundacao select.ui-datepicker-year {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
+    padding: 0.28rem 1.6rem 0.28rem 0.55rem;
+    border: 1px solid var(--surface-border, #3f3f46);
+    border-radius: 4px;
+    background-color: var(--surface-overlay, #2a2a2a);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23dee2e6' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.45rem center;
+    background-size: 0.65rem;
+    color: var(--text-color, #dee2e6);
+    font-weight: 600;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    cursor: pointer;
+    min-width: 0;
+}
+
+.dp-fundacao select.ui-datepicker-month {
+    width: 4.8rem;
+}
+
+.dp-fundacao select.ui-datepicker-year {
+    width: 4.6rem;
+}
+
+.dp-fundacao select.ui-datepicker-month:hover,
+.dp-fundacao select.ui-datepicker-year:hover,
+.dp-fundacao select.ui-datepicker-month:focus,
+.dp-fundacao select.ui-datepicker-year:focus {
+    border-color: var(--primary-color, #64B5F6);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.25);
+}
+
+/* Lista expandida (size) — altura compacta em vez do popup nativo enorme */
+.dp-fundacao select.ui-datepicker-month.dp-nav-open,
+.dp-fundacao select.ui-datepicker-year.dp-nav-open {
+    position: absolute;
+    z-index: 20;
+    height: auto;
+    max-height: 9.5rem;
+    overflow-y: auto;
+    padding-right: 0.35rem;
+    background-image: none;
+    background-color: var(--surface-overlay, #2a2a2a);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+.dp-fundacao .ui-datepicker-prev,
+.dp-fundacao .ui-datepicker-next {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    top: 0.35rem !important;
+}
+
+.dp-fundacao table {
+    font-size: 0.82rem;
+    margin: 0.15rem 0 0 !important;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.dp-fundacao th {
+    padding: 0.25rem 0 !important;
+    font-weight: 600;
+    color: var(--text-color-secondary, #a0a0a0);
+}
+
+.dp-fundacao td {
+    padding: 0.1rem !important;
+}
+
+.dp-fundacao td > a,
+.dp-fundacao td > span {
+    width: 1.85rem !important;
+    height: 1.85rem !important;
+    line-height: 1.85rem !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}

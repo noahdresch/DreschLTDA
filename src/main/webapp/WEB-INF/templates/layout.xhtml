@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+        <ui:insert name="title">Cadastro de Empresas</ui:insert>
+    </title>
+    <h:outputStylesheet library="css" name="toast.css"/>
+    <h:outputStylesheet library="css" name="datePicker.css"/>
+    <h:outputStylesheet library="css" name="layout.css"/>
+</h:head>
+<h:body>
+    <!-- Toast global: consome FacesMessage com clientId null (API atual inalterada). -->
+    <h:form id="frmToast">
+        <p:growl id="toastNotificacoes"
+                 widgetVar="toastNotificacoes"
+                 globalOnly="true"
+                 showSummary="true"
+                 showDetail="true"
+                 sticky="false"
+                 life="4500"
+                 escape="false"
+                 keepAlive="false"
+                 skipDetailIfEqualsSummary="true">
+            <p:autoUpdate/>
+        </p:growl>
+    </h:form>
+
+    <div class="app-shell">
+        <aside class="app-sidebar" aria-label="Menu principal">
+            <div class="app-brand">
+                <span class="app-brand-icon" aria-hidden="true">
+                    <i class="pi pi-building"/>
+                </span>
+                <span class="app-brand-text">Empresas</span>
+            </div>
+            <ui:include src="/WEB-INF/includes/app-menu.xhtml">
+                <ui:param name="menuId" value="menuDesktop"/>
+            </ui:include>
+        </aside>
+
+        <div class="app-main">
+            <div class="app-topbar">
+                <h:form id="frmTopbar">
+                    <p:commandButton id="btnMenuMobile"
+                                     type="button"
+                                     icon="pi pi-bars"
+                                     styleClass="ui-button-flat"
+                                     title="Abrir menu"
+                                     onclick="PF('menuSidebar').show()"/>
+                </h:form>
+                <span class="app-topbar-title">Empresas</span>
+            </div>
+
+            <div class="app-content">
+                <ui:insert name="content"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mesmo menu em overlay no mobile (media query esconde .app-sidebar). -->
+    <p:sidebar id="menuSidebar"
+               widgetVar="menuSidebar"
+               position="left"
+               style="width: 280px;">
+        <div class="app-brand app-sidebar-mobile-brand">
+            <span class="app-brand-icon" aria-hidden="true">
+                <i class="pi pi-building"/>
+            </span>
+            <span class="app-brand-text">Empresas</span>
+        </div>
+        <ui:include src="/WEB-INF/includes/app-menu.xhtml">
+            <ui:param name="menuId" value="menuMobile"/>
+        </ui:include>
+    </p:sidebar>
+</h:body>
+</html>

@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/layout.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{empresaFormController.id}"/>
+        <f:viewAction action="#{empresaFormController.carregar}"/>
+    </f:metadata>
+
+    <ui:define name="title">#{empresaFormController.edicao ? 'Editar empresa' : 'Nova empresa'}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="formCadastro">
+            <p:focus context="formCadastro"/>
+            <p:panel header="#{empresaFormController.edicao ? 'Editar empresa' : 'Cadastro de empresa'}"
+                     styleClass="ui-fluid">
+
+                <p:panelGrid columns="2" layout="grid"
+                             styleClass="ui-fluid"
+                             columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-10">
+
+                    <p:outputLabel for="razaoSocial" value="Razão Social"/>
+                    <h:panelGroup layout="block">
+                        <p:inputText id="razaoSocial"
+                                     value="#{empresaFormController.empresa.razaoSocial}"
+                                     maxlength="120"
+                                     required="true"
+                                     requiredMessage="Razão Social é obrigatória"/>
+                        <p:message for="razaoSocial" display="text"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel for="nomeFantasia" value="Nome Fantasia"/>
+                    <h:panelGroup layout="block">
+                        <p:inputText id="nomeFantasia"
+                                     value="#{empresaFormController.empresa.nomeFantasia}"
+                                     maxlength="120"
+                                     required="true"
+                                     requiredMessage="Nome Fantasia é obrigatório"/>
+                        <p:message for="nomeFantasia" display="text"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel for="cnpj" value="CNPJ"/>
+                    <h:panelGroup layout="block">
+                        <p:inputMask id="cnpj"
+                                     value="#{empresaFormController.empresa.cnpj}"
+                                     mask="99.999.999/9999-99"
+                                     slotChar="_"
+                                     placeholder="00.000.000/0000-00"
+                                     validateMask="true"
+                                     autoClear="false"
+                                     required="true"
+                                     requiredMessage="CNPJ é obrigatório"
+                                     converter="cnpjConverter"/>
+                        <p:message for="cnpj" display="text"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel for="ramoAtividade" value="Ramo de Atividade"/>
+                    <h:panelGroup layout="block">
+                        <p:inputText id="ramoAtividade"
+                                     value="#{empresaFormController.empresa.ramoAtividade}"
+                                     maxlength="80"
+                                     required="true"
+                                     requiredMessage="Ramo de Atividade é obrigatório"/>
+                        <p:message for="ramoAtividade" display="text"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel for="dataFundacao" value="Data de Fundação"/>
+                    <h:panelGroup layout="block">
+                        <p:datePicker id="dataFundacao"
+                                      value="#{empresaFormController.empresa.dataFundacao}"
+                                      pattern="dd/MM/yyyy"
+                                      mask="true"
+                                      showIcon="true"
+                                      locale="pt"
+                                      monthNavigator="true"
+                                      yearNavigator="true"
+                                      yearRange="1920:2030"
+                                      panelStyleClass="dp-fundacao"
+                                      beforeShow="function(){var p=this.panel;if(!p){return;}p.find('select.ui-datepicker-month,select.ui-datepicker-year').each(function(){var s=this,$s=jQuery(s);$s.off('.dpC').on('mousedown.dpC focus.dpC',function(){s.size=Math.min(6,s.options.length);$s.addClass('dp-nav-open');}).on('change.dpC blur.dpC',function(){s.size=0;$s.removeClass('dp-nav-open');});});}"
+                                      required="true"
+                                      requiredMessage="Data de Fundação é obrigatória"
+                                      style="width:100%;"/>
+                        <p:message for="dataFundacao" display="text"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel for="tipoEmpresa" value="Tipo da Empresa"/>
+                    <h:panelGroup layout="block">
+                        <p:selectOneMenu id="tipoEmpresa"
+                                         value="#{empresaFormController.empresa.tipoEmpresa}"
+                                         required="true"
+                                         requiredMessage="Tipo da Empresa é obrigatório">
+                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}"/>
+                            <f:selectItems value="#{empresaFormController.tiposEmpresa}"
+                                           var="tipo"
+                                           itemValue="#{tipo}"
+                                           itemLabel="#{tipo}"/>
+                        </p:selectOneMenu>
+                        <p:message for="tipoEmpresa" display="text"/>
+                    </h:panelGroup>
+                </p:panelGrid>
+
+                <p:divider/>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <p:button value="Voltar"
+                              outcome="/pages/empresas"
+                              icon="pi pi-arrow-left"
+                              styleClass="ui-button-secondary"
+                              style="width: auto;"/>
+                    <p:commandButton value="Salvar"
+                                     action="#{empresaFormController.salvar}"
+                                     icon="pi pi-save"
+                                     ajax="false"
+                                     style="width: auto;"/>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
