@@ -61,18 +61,18 @@ XHTML / PrimeFaces
 Em ambiente containerizado, três serviços colaboram na ordem abaixo:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Docker Compose                          │
-│                                                             │
-│  ┌──────────┐    healthy     ┌──────────┐  migrate OK  ┌──┴──┐
-│  │ postgres │ ─────────────► │  flyway  │ ───────────► │ app │
-│  │ (PG 17)  │                │ (one-shot)│              │Tomcat│
-│  └────┬─────┘                └──────────┘              └──┬──┘
-│       │                      volume:                       │
-│       │                      db/migration                  │
-│       ▼                                                    │
-│  volume postgres_data                          porta APP_PORT│
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                     Docker Compose                           │       │
+│                                                              │       │
+│  ┌──────────┐    healthy     ┌───────────┐   migrate OK   ┌──┴───┐   │
+│  │ postgres │ ─────────────► │  flyway   │ ─────────────► │ app  │   │
+│  │ (PG 17)  │                │ (one-shot)│                │Tomcat│   │
+│  └────┬─────┘                └───────────┘                └──┬───┘   │
+│       │                      volume:                         │       │
+│       │                      db/migration                    │       │
+│       ▼                                                      │       │
+│  volume postgres_data                                 porta APP_PORT │
+└──────────────────────────────────────────────────────────────────────┘
                               │
                               ▼
                      http://localhost:APP_PORT/
